@@ -2,7 +2,7 @@ const WHEEL_ORDER = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30,
 const RED_NUMBERS = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]);
 const BOARD_ROWS = [[3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36], [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35], [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]];
 
-let lastNumbers = [5, 23, 2, 9];
+let lastNumbers = [];
 
 const elements = {
   wheel: document.querySelector('#wheel'),
@@ -12,6 +12,7 @@ const elements = {
   form: document.querySelector('#chatForm'),
   input: document.querySelector('#numberInput'),
   error: document.querySelector('#error'),
+  resetButton: document.querySelector('#resetButton'),
   lastLoaded: document.querySelector('#lastLoaded'),
   blueList: document.querySelector('#blueList'),
   yellowList: document.querySelector('#yellowList'),
@@ -23,6 +24,8 @@ function normalizeNumbers(text) {
 }
 
 function calculateHighlights(numbers) {
+  if (numbers.length === 0) return { blue: [], yellow: [], green: [] };
+
   const blue = new Set(numbers.slice(-4));
   const yellow = new Set();
 
@@ -46,12 +49,14 @@ function tableColor(number) {
 function highlightColor(number, highlights) {
   if (highlights.blue.includes(number)) return 'blue';
   if (highlights.yellow.includes(number)) return 'yellow';
-  return 'green';
+  if (highlights.green.includes(number)) return 'green';
+  return '';
 }
 
 function createNumber(number, highlights, className = 'board-number') {
   const node = document.createElement('span');
-  node.className = `${className} ${tableColor(number)} highlight-${highlightColor(number, highlights)}`;
+  const highlight = highlightColor(number, highlights);
+  node.className = `${className} ${tableColor(number)}${highlight ? ` highlight-${highlight}` : ''}`;
   node.textContent = number;
   return node;
 }
@@ -81,7 +86,7 @@ function renderLists(highlights) {
   elements.blueList.textContent = highlights.blue.length ? highlights.blue.join(', ') : 'Sin números';
   elements.yellowList.textContent = highlights.yellow.length ? highlights.yellow.join(', ') : 'Sin números';
   elements.greenList.textContent = highlights.green.length ? highlights.green.join(', ') : 'Sin números';
-  elements.lastLoaded.textContent = `Últimos cargados: ${lastNumbers.join(', ')}`;
+  elements.lastLoaded.textContent = lastNumbers.length ? `Últimos cargados: ${lastNumbers.join(', ')}` : 'Últimos cargados: ninguno';
 }
 
 function render() {
@@ -94,11 +99,18 @@ function render() {
 elements.form.addEventListener('submit', (event) => {
   event.preventDefault();
   const parsed = normalizeNumbers(elements.input.value);
-  if (parsed.length !== 4) {
-    elements.error.textContent = 'Escribí exactamente 4 números válidos entre 0 y 36. Ejemplo: 5 23 2 9';
+  if (parsed.length === 0) {
+    elements.error.textContent = 'Escribí al menos 1 número válido entre 0 y 36. Ejemplo: 5 o 5 23';
     return;
   }
-  lastNumbers = parsed;
+  lastNumbers = [...lastNumbers, ...parsed].slice(-4);
+  elements.input.value = '';
+  elements.error.textContent = '';
+  render();
+});
+
+elements.resetButton.addEventListener('click', () => {
+  lastNumbers = [];
   elements.input.value = '';
   elements.error.textContent = '';
   render();

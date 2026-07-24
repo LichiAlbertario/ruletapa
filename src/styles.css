@@ -109,9 +109,9 @@ h1 { margin-bottom: 12px; font-size: clamp(2rem, 4vw, 4rem); }
 .black { background: #202226; }
 .zero { background: #0fa04a; }
 
-.highlight-blue { box-shadow: 0 0 0 6px #1778ff, 0 0 22px 9px rgba(23, 120, 255, .55); }
-.highlight-yellow { box-shadow: 0 0 0 6px #ffdf32, 0 0 22px 9px rgba(255, 223, 50, .48); }
-.highlight-green { box-shadow: 0 0 0 4px #4fdf57; }
+.highlight-blue { color: #55a2ff; }
+.highlight-yellow { color: #ffdf32; }
+.highlight-green { color: #68f075; }
 
 .wheel-center {
   position: absolute;
@@ -219,6 +219,7 @@ input, button {
 
 input { flex: 1; padding: 14px 16px; }
 button { padding: 14px 20px; color: #16350d; background: #ffdf32; cursor: pointer; }
+.reset-button { color: #f7ffe9; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .24); }
 
 .error { margin: 10px 0 0; color: #ffd2d2; font-weight: 800; }
 

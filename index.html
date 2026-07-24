@@ -11,7 +11,7 @@
       <header class="hero">
         <p class="eyebrow">Analizador visual</p>
         <h1>Ruleta europea de 37 números</h1>
-        <p>Los 4 números ingresados se pintan de azul; sus dos vecinos a izquierda y derecha en la rueda se pintan de amarillo; el resto queda verde.</p>
+        <p>Los números cargados se pintan de azul; sus dos vecinos a izquierda y derecha en la rueda se pintan de amarillo; el resto queda verde.</p>
       </header>
       <div class="main-layout">
         <section class="wheel-card" aria-label="Ruleta redonda con 37 números">
@@ -30,18 +30,19 @@
           <section class="chat-card">
             <h2>Chat de últimos números</h2>
             <div class="chat-window">
-              <p class="assistant-msg">Mandame los últimos 4 números que salieron, separados por espacios o comas.</p>
+              <p class="assistant-msg">Mandame 1 o más números. Voy guardando los últimos 4 y, si agregás otro, borro el más antiguo.</p>
               <p id="lastLoaded" class="user-msg">Últimos cargados: ninguno</p>
             </div>
             <form id="chatForm" class="chat-form">
-              <input id="numberInput" placeholder="Ej: 5 23 2 9" aria-label="Últimos 4 números" />
+              <input id="numberInput" placeholder="Ej: 5 o 5 23" aria-label="Números salidos" />
               <button type="submit">Pintar</button>
+              <button id="resetButton" class="reset-button" type="button">Reestablecer números</button>
             </form>
             <p id="error" class="error" role="alert"></p>
           </section>
           <section class="lists-card">
             <h2>Listas por color</h2>
-            <div class="color-list blue"><h3>Azules (últimos 4)</h3><p id="blueList">Sin números</p></div>
+            <div class="color-list blue"><h3>Azules (números cargados)</h3><p id="blueList">Sin números</p></div>
             <div class="color-list yellow"><h3>Amarillos (2 vecinos por lado)</h3><p id="yellowList">Sin números</p></div>
             <div class="color-list green"><h3>Verdes (restantes)</h3><p id="greenList">Sin números</p></div>
           </section>
