@@ -11,7 +11,7 @@
       <header class="hero">
         <p class="eyebrow">Analizador visual</p>
         <h1>Ruleta europea de 37 números</h1>
-        <p>Los números cargados se pintan de azul; sus dos vecinos a izquierda y derecha en la rueda se pintan de amarillo; el resto queda verde.</p>
+        <p>Elegí cuántos números azules querés almacenar, cargá los últimos resultados y la app marca sus vecinos reales en la rueda.</p>
       </header>
       <div class="main-layout">
         <section class="wheel-card" aria-label="Ruleta redonda con 37 números">
@@ -30,7 +30,7 @@
           <section class="chat-card">
             <h2>Chat de últimos números</h2>
             <div class="chat-window">
-              <p class="assistant-msg">Mandame 1 o más números. Voy guardando los últimos 4 y, si agregás otro, borro el más antiguo.</p>
+              <p class="assistant-msg">Mandame 1 o más números. La barra de abajo define cuántos azules guardo; si agregás más, borro los más antiguos.</p>
               <p id="lastLoaded" class="user-msg">Últimos cargados: ninguno</p>
             </div>
             <form id="chatForm" class="chat-form">
@@ -38,6 +38,11 @@
               <button type="submit">Pintar</button>
               <button id="resetButton" class="reset-button" type="button">Reestablecer números</button>
             </form>
+            <div class="capacity-control">
+              <label for="capacityRange">Cantidad de números azules: <strong id="capacityValue">4</strong></label>
+              <input id="capacityRange" type="range" min="1" max="37" value="4" aria-label="Cantidad de números azules" />
+              <div class="range-labels"><span>1</span><span>37</span></div>
+            </div>
             <p id="error" class="error" role="alert"></p>
           </section>
           <section class="lists-card">

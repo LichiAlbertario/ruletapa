@@ -3,6 +3,7 @@ const RED_NUMBERS = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 
 const BOARD_ROWS = [[3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36], [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35], [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]];
 
 let lastNumbers = [];
+let blueCapacity = 4;
 
 const elements = {
   wheel: document.querySelector('#wheel'),
@@ -13,6 +14,8 @@ const elements = {
   input: document.querySelector('#numberInput'),
   error: document.querySelector('#error'),
   resetButton: document.querySelector('#resetButton'),
+  capacityRange: document.querySelector('#capacityRange'),
+  capacityValue: document.querySelector('#capacityValue'),
   lastLoaded: document.querySelector('#lastLoaded'),
   blueList: document.querySelector('#blueList'),
   yellowList: document.querySelector('#yellowList'),
@@ -26,7 +29,7 @@ function normalizeNumbers(text) {
 function calculateHighlights(numbers) {
   if (numbers.length === 0) return { blue: [], yellow: [], green: [] };
 
-  const blue = new Set(numbers.slice(-4));
+  const blue = new Set(numbers.slice(-blueCapacity));
   const yellow = new Set();
 
   blue.forEach((number) => {
@@ -86,6 +89,7 @@ function renderLists(highlights) {
   elements.blueList.textContent = highlights.blue.length ? highlights.blue.join(', ') : 'Sin números';
   elements.yellowList.textContent = highlights.yellow.length ? highlights.yellow.join(', ') : 'Sin números';
   elements.greenList.textContent = highlights.green.length ? highlights.green.join(', ') : 'Sin números';
+  elements.capacityValue.textContent = blueCapacity;
   elements.lastLoaded.textContent = lastNumbers.length ? `Últimos cargados: ${lastNumbers.join(', ')}` : 'Últimos cargados: ninguno';
 }
 
@@ -103,7 +107,7 @@ elements.form.addEventListener('submit', (event) => {
     elements.error.textContent = 'Escribí al menos 1 número válido entre 0 y 36. Ejemplo: 5 o 5 23';
     return;
   }
-  lastNumbers = [...lastNumbers, ...parsed].slice(-4);
+  lastNumbers = [...lastNumbers, ...parsed].slice(-blueCapacity);
   elements.input.value = '';
   elements.error.textContent = '';
   render();
@@ -113,6 +117,12 @@ elements.resetButton.addEventListener('click', () => {
   lastNumbers = [];
   elements.input.value = '';
   elements.error.textContent = '';
+  render();
+});
+
+elements.capacityRange.addEventListener('input', () => {
+  blueCapacity = Number(elements.capacityRange.value);
+  lastNumbers = lastNumbers.slice(-blueCapacity);
   render();
 });
 
