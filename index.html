@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruleta 37 números</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="hero">
+        <p class="eyebrow">Analizador visual</p>
+        <h1>Ruleta europea de 37 números</h1>
+        <p>Elegí cuántos números azules querés almacenar, cargá los últimos resultados y la app marca sus vecinos reales en la rueda.</p>
+      </header>
+      <div class="main-layout">
+        <section class="wheel-card" aria-label="Ruleta redonda con 37 números">
+          <div id="wheel" class="wheel"></div>
+        </section>
+        <div class="side-panel">
+          <section class="board-card" aria-label="Paño de ruleta">
+            <div id="racetrack" class="racetrack"></div>
+            <div class="betting-board">
+              <div id="zeroColumn" class="zero-column"></div>
+              <div id="numberGrid" class="number-grid"></div>
+              <div class="dozens"><span>1st 12</span><span>2nd 12</span><span>3rd 12</span></div>
+              <div class="outside-bets"><span>1 to 18</span><span>EVEN</span><span>RED</span><span>BLACK</span><span>ODD</span><span>19 to 36</span></div>
+            </div>
+          </section>
+          <section class="chat-card">
+            <h2>Chat de últimos números</h2>
+            <div class="chat-window">
+              <p class="assistant-msg">Mandame 1 o más números. La barra de abajo define cuántos azules guardo; si agregás más, borro los más antiguos.</p>
+              <p id="lastLoaded" class="user-msg">Últimos cargados: ninguno</p>
+            </div>
+            <form id="chatForm" class="chat-form">
+              <input id="numberInput" placeholder="Ej: 5 o 5 23" aria-label="Números salidos" />
+              <button type="submit">Pintar</button>
+              <button id="resetButton" class="reset-button" type="button">Reestablecer números</button>
+            </form>
+            <div class="capacity-control">
+              <label for="capacityRange">Cantidad de números azules: <strong id="capacityValue">4</strong></label>
+              <input id="capacityRange" type="range" min="1" max="37" value="4" aria-label="Cantidad de números azules" />
+              <div class="range-labels"><span>1</span><span>37</span></div>
+            </div>
+            <p id="error" class="error" role="alert"></p>
+          </section>
+          <section class="lists-card">
+            <h2>Listas por color</h2>
+            <div class="color-list blue"><h3>Azules (números cargados)</h3><p id="blueList">Sin números</p></div>
+            <div class="color-list yellow"><h3>Amarillos (2 vecinos por lado)</h3><p id="yellowList">Sin números</p></div>
+            <div class="color-list green"><h3>Verdes (restantes)</h3><p id="greenList">Sin números</p></div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
